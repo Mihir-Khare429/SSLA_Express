@@ -1,18 +1,14 @@
-const ProductV2 = require('../model/productV2');
-const serviceLogic = require('../service/service');
+const productV2Service = require('../service/productV2Service')
 
 const getProductV2 = async (req,res) => {
     try{
         const {productId} = req.params
-
-        // Validating here . Later on shifting to Validation Layer
-
         if(!productId){
             return res.status(400).send({
                 "message" : "Product Id is missing"
             })
         }
-        const response = await serviceLogic.getDataFromDatabase(productId)
+        const response = await productV2Service.getDataFromDatabase(productId)
         res.status(200).send(
             response
         )

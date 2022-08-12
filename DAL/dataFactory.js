@@ -13,6 +13,21 @@ class DataFactory {
             return err
         }
     }
+    async postData(schema,data){
+        try{
+            const product = new schema(data)
+            await product.save((err,product) => {
+                if(err){
+                    return err
+                }
+            })
+            return {
+                message : "Product Saved"
+            }
+        }catch(err){
+            return err
+        }
+    }
 }
 
 module.exports = DataFactory

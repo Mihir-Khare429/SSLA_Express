@@ -13,6 +13,21 @@ class V2DataHandler {
             return err
         }
     }
+    async postData(selfLink,accountId,name,quantity,description,options) {
+        try{
+            let productInfo = new DataFactory()
+            const productData = {
+                owner : {
+                    selfLink,accountId
+                },
+                name,quantity,description,options
+            }
+            const data = await productInfo.postData(ProductV2,productData)
+            return data
+        }catch(err){
+            return err
+        }
+    }
 }
 
 module.exports = V2DataHandler

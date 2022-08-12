@@ -1,24 +1,13 @@
-const ProductV2 = require('../model/productV2');
-
+const productV2Service = require('../service/productV2Service');
 
 const addProductV2 = async (req,res) => {
     try{
         const {
             selfLink,accountId,name,quantity,description,options
         } = req.body
-        const product = new ProductV2({
-            owner : {
-                selfLink,accountId
-            },
-            name,
-            quantity : quantity,
-            description,
-            options : options
-        })
-        await product.save()
+        const response = await productV2Service.postDatatoDatabase(selfLink,accountId,name,quantity,description,options)
         res.status(200).send({
-            message  : "Product Saved",
-            product : product
+            response
         })
     }catch(err){
         res.status(400).send({

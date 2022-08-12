@@ -144,9 +144,9 @@ const productV1 = new Schema({
                 required : true
             },
             dataRows : [{
-                required : true,
+                // required : [true,"Data Rows required"],
                 terms : [{
-                    required : true,
+                    // required : [true,"Terms are required"],
                     attributeKey : {
                         type :String,
                         required : true
