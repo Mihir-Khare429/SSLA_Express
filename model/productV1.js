@@ -137,55 +137,55 @@ const productV1 = new Schema({
                 type : Boolean,
                 default : false
             }
-        }],
-        dataSheets : [{
-            name : {
-                type : String,
-                required : true
-            },
-            dataRows : [{
-                // required : [true,"Data Rows required"],
-                terms : [{
-                    // required : [true,"Terms are required"],
-                    attributeKey : {
-                        type :String,
-                        required : true
-                    },
-                    operator : {
+        }]
+    }],
+    dataSheets : [{
+        name : {
+            type : String,
+            required : true
+        },
+        dataRows : [{
+            // required : [true,"Data Rows required"],
+            terms : [{
+                // required : [true,"Terms are required"],
+                attributeKey : {
+                    type :String,
+                    required : true
+                },
+                operator : {
+                    type : String,
+                    enum : [ "In","NotIn" ],
+                    required : true
+                },
+                attributeValues : [{
+                    value : {
                         type : String,
-                        enum : [ "In","NotIn" ],
                         required : true
                     },
-                    attributeValues : [{
-                        value : {
-                            type : String,
-                            required : true
-                        },
-                        unitOfMeasure : {
-                            type : String
-                        }
-                    }],
-                    attributeRanges : [{
-                        minimum : {
-                            type : Number,
-                            required : true
-                        },
-                        maximum : {
-                            type : Number,
-                            default : 0
-                        },
-                        increment : {
-                            type : Number,
-                            default : 0
-                        },
-                        unitOfMeasure : {
-                            type : String
-                        }
-                    }],
-                    formula : {
+                    unitOfMeasure : {
                         type : String
                     }
-                }]
+                }],
+                attributeRanges : [{
+                    minimum : {
+                        type : Number,
+                        required : true
+                    },
+                    maximum : {
+                        type : Number,
+                        default : 0
+                    },
+                    increment : {
+                        type : Number,
+                        default : 0
+                    },
+                    unitOfMeasure : {
+                        type : String
+                    }
+                }],
+                formula : {
+                    type : String
+                }
             }]
         }]
     }]

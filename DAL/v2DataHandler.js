@@ -1,5 +1,4 @@
 const ProductV2 = require('../model/productV2');
-const ProductV1 = require('../model/productV1');
 
 const DataFactory = require('./dataFactory');
 
