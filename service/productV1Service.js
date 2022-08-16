@@ -1,32 +1,32 @@
-const DALWrapper = require('../DAL/dalLogic');
+const DALWrapper = require("../DAL/dalLogic");
 
 const getDataFromDatabase = (productId) => {
-    try{
+  try {
+  } catch (err) {
+    return err;
+  }
+};
 
-    }catch(err){
-        return err
-    }
-}
-
-const postDatatoDatabase = async (whitelist,rules,results,dataSheets) => {
-    try{
-        const response = await DALWrapper.addProductV1(whitelist,rules,dataSheets)
-        return response
-    }catch(err){
-        return err
-    }
-}
+const postDatatoDatabase = async (whitelist, rules, dataSheets) => {
+  try {
+    const response = await DALWrapper.addProductV1(
+      whitelist,
+      rules,
+      dataSheets
+    );
+    return response;
+  } catch (err) {
+    return err;
+  }
+};
 
 const getDataFromEndpoint = () => {
-    try{
+  try {
+  } catch (err) {}
+};
 
-    }catch(err){
-
-    }
-}
-
-module.exports ={
-    getDataFromDatabase,
-    getDataFromEndpoint,
-    postDatatoDatabase
-}
+module.exports = {
+  getDataFromDatabase,
+  getDataFromEndpoint,
+  postDatatoDatabase,
+};

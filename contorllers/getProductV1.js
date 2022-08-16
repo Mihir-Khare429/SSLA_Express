@@ -1,11 +1,8 @@
-const productV1Service = require('../service/productV1Service');
+const productV1Service = require("../service/productV1Service");
 
-const getProductV1 = async (req,res) => {
-    try{
+const getProductV1 = async (req, res) => {
+  try {
+  } catch (err) {}
+};
 
-    }catch(err){
-
-    }
-}
-
-module.exports = getProductV1
+module.exports = getProductV1;
