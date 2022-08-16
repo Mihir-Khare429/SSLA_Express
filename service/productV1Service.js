@@ -1,7 +1,9 @@
 const DALWrapper = require("../DAL/dalLogic");
 
-const getDataFromDatabase = (productId) => {
+const getDataFromDatabase = async (productId) => {
   try {
+    const response = await DALWrapper.getProductDataV1(productId);
+    return response;
   } catch (err) {
     return err;
   }

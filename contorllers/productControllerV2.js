@@ -22,4 +22,24 @@ const addProductV2 = async (req, res) => {
   }
 };
 
-module.exports = addProductV2;
+const getProductV2 = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    if (!productId) {
+      return res.status(400).send({
+        message: "Product Id is missing",
+      });
+    }
+    const response = await productV2Service.getDataFromDatabase(productId);
+    res.status(200).send(response);
+  } catch (err) {
+    res.status(404).send({
+      message: err,
+    });
+  }
+};
+
+module.exports = {
+  addProductV2,
+  getProductV2,
+};

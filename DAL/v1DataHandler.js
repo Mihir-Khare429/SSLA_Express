@@ -5,7 +5,12 @@ const DataFactory = require("./dataFactory");
 class v1DataHandler {
   async getData(productId) {
     try {
-    } catch (err) {}
+      const data = new DataFactory();
+      const getData = await data.searchData(ProductV1, { _id: productId });
+      return getData;
+    } catch (err) {
+      return err;
+    }
   }
   async postData(whitelist, rules, dataSheets) {
     try {
