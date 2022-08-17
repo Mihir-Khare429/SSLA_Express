@@ -1,5 +1,4 @@
-const CustomError = require("../errorHandling");
-const mongoose = require("mongoose");
+const Validator = require("../Validation/validator");
 const productV1Service = require("../service/productV1Service");
 
 const addProductV1 = async (req, res) => {
@@ -20,15 +19,11 @@ const addProductV1 = async (req, res) => {
   }
 };
 
-const getProductV1 = async (req, res) => {
+const getProductV1 = async (req, res, next) => {
   try {
     const { productId } = req.params;
-    if (!mongoose.isValidObjectId(productId)) {
-      const error = CustomError.badRequest("Bad request");
-      console.log("data", error);
-      res.status(error.statusCode).send({
-        message: error.message,
-      });
+    if (Validator.idValidator(productId)) {
+      next({ status: 400, message: "Product Id not Provided" });
       return;
     }
     const productV1ServiceResponse = await productV1Service.getDataFromDatabase(

@@ -24,6 +24,11 @@ app.get("/", (req, res) => {
 });
 
 app.use("/product", productRoutes);
+app.use((err, req, res, next) => {
+  res
+    .status(err.status || 500)
+    .send({ "error ": err.message || "Internal Server Error" });
+});
 
 app.listen(port, (err) => {
   console.log(`Server listening on ${port}`);
