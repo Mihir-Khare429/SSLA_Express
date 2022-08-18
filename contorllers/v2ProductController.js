@@ -1,5 +1,5 @@
 const Validator = require("../Validation/validator");
-const productV2Service = require("../service/productV2Service");
+const ProductV2Service = require("../service/productV2Service");
 
 const addProductV2 = async (req, res, next) => {
   try {
@@ -12,7 +12,7 @@ const addProductV2 = async (req, res, next) => {
         message: validatorResponse.message,
       });
     }
-    const response = await productV2Service.postDatatoDatabase(
+    const response = await ProductV2Service.postDatatoDatabase(
       selfLink,
       accountId,
       name,
@@ -37,7 +37,7 @@ const getProductV2 = async (req, res, next) => {
       next({ status: 400, message: "Product Id Invalid" });
       return;
     }
-    const response = await productV2Service.getDataFromDatabase(productId);
+    const response = await ProductV2Service.getDataFromDatabase(productId);
     res.status(200).send(response);
   } catch (err) {
     res.status(404).send({
