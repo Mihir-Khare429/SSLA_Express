@@ -30,7 +30,7 @@ const getProductV1 = async (req, res, next) => {
   try {
     const { productId } = req.params;
     console.log(Validator.idValidator(productId));
-    if (Validator.idValidator(productId)) {
+    if (!Validator.idValidator(productId)) {
       next({ status: 400, message: "Product Id Invalid" });
       return;
     }

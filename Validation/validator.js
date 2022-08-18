@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
-
-const idValidator = async (productId) => {
-  return mongoose.isValidObjectId(productId);
+//Class
+const idValidator = (productId) => {
+  if (mongoose.isValidObjectId(productId)) {
+    return true;
+  }
+  return false;
 };
 
 const v1PostProductValidator = async (body) => {
@@ -12,7 +15,7 @@ const v1PostProductValidator = async (body) => {
       message: "Empty Request Body",
     };
   }
-  if (!body.whitelists || !body.rules || !body.dataSheets) {
+  if (!body.whitelist || !body.rules || !body.dataSheets) {
     return {
       success: false,
       status: 400,
@@ -33,7 +36,7 @@ const v2PostProductValidator = (body) => {
     };
   }
   if (
-    !body.selfLinks ||
+    !body.selfLink ||
     !body.accountId ||
     !body.name ||
     !body.quantity ||

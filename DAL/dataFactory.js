@@ -1,11 +1,25 @@
 const CustomError = require("../errorHandling");
 const ProductV1 = require("../model/productV1");
 const ProductV2 = require("../model/productV2");
+const ProductVersionInfo = require("../model/productVersionInfo");
 
 class DataFactory {
+  async getProductInfo(productId) {
+    try {
+      const response = await ProductVersionInfo.findOne({
+        productId,
+      });
+      if (!response || response == {}) {
+        throw new Error("No Product Found");
+      } else {
+        return response.schemaStoredIn;
+      }
+    } catch (err) {
+      return err;
+    }
+  }
   async searchData(schema, query) {
     try {
-      console.log("dsd");
       const response = await schema.findOne(query);
       if (response) {
         return response;
@@ -27,6 +41,19 @@ class DataFactory {
           return err;
         }
       });
+      if (schema == ProductV1) {
+        const productInfo = new ProductVersionInfo({
+          productId: product._id,
+          schemaStoredIn: "productV1",
+        });
+        await productInfo.save();
+      } else {
+        const productInfo = new ProductVersionInfo({
+          productId: product._id,
+          schemaStoredIn: "productV2",
+        });
+        await productInfo.save();
+      }
       return {
         message: product,
       };

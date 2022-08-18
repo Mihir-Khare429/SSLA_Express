@@ -7,6 +7,7 @@ class v1DataHandler {
     try {
       const data = new DataFactory();
       const getData = await data.searchData(ProductV1, { _id: productId });
+      console.log(getData);
       return getData;
     } catch (err) {
       return err;
@@ -15,11 +16,12 @@ class v1DataHandler {
   async postData(whitelist, rules, dataSheets) {
     try {
       const data = new DataFactory();
-      const postData = await data.postData(ProductV1, {
+      const saveData = {
         whitelist,
         rules,
         dataSheets,
-      });
+      };
+      const postData = await data.postData(ProductV1, saveData);
       return postData;
     } catch (err) {
       return err;
