@@ -5,17 +5,18 @@ const ProductV2 = require("../model/productV2");
 class DataFactory {
   async searchData(schema, query) {
     try {
-      const response = await schema
-        .findOne(query)
-        .select(
-          "-_id -options._id -options.values._id -quantity._id -__v -whitelist.attributeValue._id -whitelist.attributeRanges._id -whitelist._id -rules.predicates.attributeValues._id -rules.predicates._id -rules.results.attributeValues._id -rules.results._id -rules._id -rules.results.attributeRanges._id"
-        );
-      if (!response) {
-        return CustomError.notFound("No Product found");
+      console.log("dsd");
+      const response = await schema.findOne(query);
+      if (response) {
+        return response;
+      } else {
+        console.log("djdfid");
       }
-      return response;
     } catch (err) {
-      return err;
+      throw {
+        status: err.statusCode || 404,
+        message: err.message || "Casting Error",
+      };
     }
   }
   async postData(schema, data) {

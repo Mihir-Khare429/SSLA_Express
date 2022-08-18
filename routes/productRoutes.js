@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
-const ProductV2 = require("../contorllers/productControllerV2");
-const ProductV1 = require("../contorllers/productControllerV1");
+const ProductV2 = require("../contorllers/v2ProductController");
+const ProductV1 = require("../contorllers/v1ProductController");
 
 router.post("/addProductV2", ProductV2.addProductV2);
 router.post("/addProductV1", ProductV1.addProductV1);

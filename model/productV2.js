@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-
-const Schema = require("mongoose").Schema;
+const Schema = mongoose.Schema;
 
 const productV2 = new Schema({
   owner: {

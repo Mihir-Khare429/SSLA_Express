@@ -1,9 +1,17 @@
+const Validator = require("../Validation/validator");
 const productV2Service = require("../service/productV2Service");
 
-const addProductV2 = async (req, res) => {
+const addProductV2 = async (req, res, next) => {
   try {
     const { selfLink, accountId, name, quantity, description, options } =
       req.body;
+    const validatorResponse = Validator.v2PostProductValidator(req.body);
+    if (validatorResponse.success == false) {
+      return next({
+        status: validatorResponse.status,
+        message: validatorResponse.message,
+      });
+    }
     const response = await productV2Service.postDatatoDatabase(
       selfLink,
       accountId,
@@ -22,13 +30,12 @@ const addProductV2 = async (req, res) => {
   }
 };
 
-const getProductV2 = async (req, res) => {
+const getProductV2 = async (req, res, next) => {
   try {
     const { productId } = req.params;
-    if (!productId) {
-      return res.status(400).send({
-        message: "Product Id is missing",
-      });
+    if (Validator.idValidator(productId)) {
+      next({ status: 400, message: "Product Id Invalid" });
+      return;
     }
     const response = await productV2Service.getDataFromDatabase(productId);
     res.status(200).send(response);

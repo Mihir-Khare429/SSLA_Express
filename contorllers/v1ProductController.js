@@ -1,9 +1,16 @@
 const Validator = require("../Validation/validator");
 const productV1Service = require("../service/productV1Service");
 
-const addProductV1 = async (req, res) => {
+const addProductV1 = async (req, res, next) => {
   try {
     const { whitelist, rules, dataSheets } = req.body;
+    const validatorResponse = await Validator.v1PostProductValidator(req.body);
+    if (validatorResponse.success == false) {
+      return next({
+        status: validatorResponse.status,
+        message: validatorResponse.message,
+      });
+    }
     const result = await productV1Service.postDatatoDatabase(
       whitelist,
       rules,
@@ -22,8 +29,9 @@ const addProductV1 = async (req, res) => {
 const getProductV1 = async (req, res, next) => {
   try {
     const { productId } = req.params;
+    console.log(Validator.idValidator(productId));
     if (Validator.idValidator(productId)) {
-      next({ status: 400, message: "Product Id not Provided" });
+      next({ status: 400, message: "Product Id Invalid" });
       return;
     }
     const productV1ServiceResponse = await productV1Service.getDataFromDatabase(
