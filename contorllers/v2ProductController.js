@@ -12,7 +12,8 @@ const addProductV2 = async (req, res, next) => {
         message: validatorResponse.message,
       });
     }
-    const response = await ProductV2Service.postDatatoDatabase(
+    const v2Product = new ProductV2Service();
+    const response = await v2Product.postDatatoDatabase(
       selfLink,
       accountId,
       name,
@@ -37,7 +38,8 @@ const getProductV2 = async (req, res, next) => {
       next({ status: 400, message: "Product Id Invalid" });
       return;
     }
-    const response = await ProductV2Service.getDataFromDatabase(productId);
+    const v2Product = new ProductV2Service();
+    const response = await v2Product.getDataFromDatabase(productId);
     res.status(200).send(response);
   } catch (err) {
     res.status(404).send({

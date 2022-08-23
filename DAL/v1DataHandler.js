@@ -7,7 +7,6 @@ class v1DataHandler {
     try {
       const data = new DataFactory();
       const getData = await data.searchData(ProductV1, { _id: productId });
-      console.log(getData);
       return getData;
     } catch (err) {
       return err;

@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const morgan = require("morgan");
 const port = process.env.PORT || 8000;
 
 app.use(express.urlencoded({ extended: true }));
@@ -16,6 +17,10 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms")
+);
 
 app.get("/", (req, res) => {
   res.status(200).send({

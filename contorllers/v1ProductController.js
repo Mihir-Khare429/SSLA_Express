@@ -11,7 +11,8 @@ const addProductV1 = async (req, res, next) => {
         message: validatorResponse.message,
       });
     }
-    const result = await ProductV1Service.postDatatoDatabase(
+    const v1Product = new ProductV1Service();
+    const result = await v1Product.postDatatoDatabase(
       whitelist,
       rules,
       dataSheets
@@ -29,16 +30,14 @@ const addProductV1 = async (req, res, next) => {
 const getProductV1 = async (req, res, next) => {
   try {
     const { productId } = req.params;
-    console.log(Validator.idValidator(productId));
     if (!Validator.idValidator(productId)) {
       next({ status: 400, message: "Product Id Invalid" });
       return;
     }
-    const productV1ServiceResponse = await ProductV1Service.getDataFromDatabase(
-      productId
-    );
+    const v1Product = new ProductV1Service();
+    const response = await v1Product.getDataFromDatabase(productId);
     res.status(200).send({
-      productV1ServiceResponse,
+      response,
     });
   } catch (err) {
     res.status(500).send({

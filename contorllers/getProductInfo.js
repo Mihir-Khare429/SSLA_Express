@@ -8,15 +8,9 @@ const getProductInfo = async (req, res, next) => {
       next({ status: 400, message: "Product Id Invalid" });
       return;
     }
-    const productVersion = await ProductInfoService.getDataFromDatabase(
-      productId
-    );
-    console.log(productVersion);
-    const response = await ProductInfoService.getDataFromService(
-      productId,
-      productVersion
-    );
-    res.status(200).send(response);
+    const product = new ProductInfoService();
+    const productInfo = await product.getInfo(productId);
+    res.status(200).send(productInfo);
   } catch (err) {
     return next(err);
   }

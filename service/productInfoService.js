@@ -1,9 +1,8 @@
-const ProductV1Service = require("../service/productV1Service");
-const ProductV2Service = require("../service/productV2Service");
+const ProductServiceFactory = require("./productServiceFactory");
 const DataFactory = require("../DAL/dataFactory");
 
 class ProductInfoService {
-  static async getDataFromDatabase(productId) {
+  async #getDataFromDatabase(productId) {
     try {
       const data = new DataFactory();
       const response = await data.getProductInfo(productId);
@@ -13,16 +12,26 @@ class ProductInfoService {
     }
   }
 
-  static async getDataFromService(productId, version) {
+  async #getDataFromService(productId, version) {
     try {
       let response;
-      if (version == "productV1") {
-        response = await ProductV1Service.getDataFromDatabase(productId);
-        console.log(response);
-      } else {
-        response = await ProductV2Service.getDataFromDatabase(productId);
-      }
+      let productFactory = new ProductServiceFactory();
+      let product = productFactory.createVersionObjects(version);
+      response = await product.getDataFromDatabase(productId);
       return response;
+    } catch (err) {
+      return err;
+    }
+  }
+
+  async getInfo(productId) {
+    try {
+      const productVersion = await this.#getDataFromDatabase(productId);
+      const productInfo = await this.#getDataFromService(
+        productId,
+        productVersion
+      );
+      return productInfo;
     } catch (err) {
       return err;
     }
