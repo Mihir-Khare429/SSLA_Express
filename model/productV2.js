@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const productV2 = new Schema({
+  productId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   owner: {
     selfLink: {
       type: String,

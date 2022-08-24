@@ -2,10 +2,11 @@ const mongoose = require("mongoose");
 
 class Validator {
   static idValidator(productId) {
-    if (mongoose.isValidObjectId(productId)) {
-      return true;
-    }
-    return false;
+    // if (mongoose.isValidObjectId(productId)) {
+    //   return true;
+    // }
+    // return false;
+    return true;
   }
 
   static async v1PostProductValidator(body) {

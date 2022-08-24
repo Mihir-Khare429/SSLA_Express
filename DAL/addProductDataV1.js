@@ -1,9 +1,11 @@
 const v1DataHandler = require("./v1DataHandler");
+const productIdGenerator = require("../middlewares/productIdGenerator");
 
 const addProductDataV1 = async (whitelist, rules, dataSheets) => {
   try {
     const handler = new v1DataHandler();
-    return await handler.postData(whitelist, rules, dataSheets);
+    const productID = productIdGenerator();
+    return await handler.postData(productID, whitelist, rules, dataSheets);
   } catch (err) {
     return err;
   }

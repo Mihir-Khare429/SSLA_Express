@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const Schema = require("mongoose").Schema;
 const productV1 = new Schema({
+  productId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   whitelist: [
     {
       required: {

@@ -3,7 +3,7 @@ const productVersionInfo = new mongoose.Schema({
   productId: {
     unique: true,
     required: true,
-    type: mongoose.Types.ObjectId,
+    type: String,
   },
   schemaStoredIn: {
     type: String,

@@ -43,13 +43,13 @@ class DataFactory {
       });
       if (schema == ProductV1) {
         const productInfo = new ProductVersionInfo({
-          productId: product._id,
+          productId: product.productId,
           schemaStoredIn: "productV1",
         });
         await productInfo.save();
       } else {
         const productInfo = new ProductVersionInfo({
-          productId: product._id,
+          productId: product.productId,
           schemaStoredIn: "productV2",
         });
         await productInfo.save();

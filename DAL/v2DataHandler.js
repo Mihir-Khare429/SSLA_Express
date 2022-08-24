@@ -6,16 +6,27 @@ class V2DataHandler {
   async getData(productId) {
     try {
       let productInfo = new DataFactory();
-      const data = await productInfo.searchData(ProductV2, { _id: productId });
+      const data = await productInfo.searchData(ProductV2, {
+        productId: productId,
+      });
       return data;
     } catch (err) {
       return err;
     }
   }
-  async postData(selfLink, accountId, name, quantity, description, options) {
+  async postData(
+    productId,
+    selfLink,
+    accountId,
+    name,
+    quantity,
+    description,
+    options
+  ) {
     try {
       let productInfo = new DataFactory();
       const productData = {
+        productId,
         owner: {
           selfLink,
           accountId,

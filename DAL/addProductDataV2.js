@@ -1,4 +1,5 @@
 const V2DataHandler = require("./v2DataHandler");
+const productIdGenerator = require("../middlewares/productIdGenerator");
 
 const addProductV2 = async (
   selfLink,
@@ -10,7 +11,9 @@ const addProductV2 = async (
 ) => {
   try {
     const handler = new V2DataHandler();
+    const productID = productIdGenerator();
     return handler.postData(
+      productID,
       selfLink,
       accountId,
       name,

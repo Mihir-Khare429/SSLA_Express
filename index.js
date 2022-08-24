@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const port = process.env.PORT || 8000;
+const compression = require("compression");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -21,6 +22,8 @@ mongoose
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
 );
+
+app.use(compression());
 
 app.get("/", (req, res) => {
   res.status(200).send({
