@@ -1,5 +1,7 @@
 const Validator = require("../Validation/validator");
 const ProductInfoService = require("../service/productInfoService");
+const NodeCache = require("node-cache");
+const { myCache } = require("../middlewares/cacheMiddleware");
 
 const getProductInfo = async (req, res, next) => {
   try {
@@ -10,6 +12,7 @@ const getProductInfo = async (req, res, next) => {
     }
     const product = new ProductInfoService();
     const productInfo = await product.getInfo(productId);
+    myCache.set(productId, JSON.stringify(productInfo));
     res.status(200).send(productInfo);
   } catch (err) {
     return next(err);
