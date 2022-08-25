@@ -1,4 +1,5 @@
 const uuid = require("short-uuid");
+const logger = require("../winstonConfig");
 
 const productIdGenerator = () => {
   try {
@@ -7,6 +8,7 @@ const productIdGenerator = () => {
     const productId = `${prefix}${id}`;
     return productId;
   } catch (err) {
+    logger.error(`${req.method}: ${req.url} ${err.message}`);
     return err;
   }
 };

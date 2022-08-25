@@ -7,6 +7,7 @@ dotenv.config();
 const port = process.env.PORT || 8000;
 const compression = require("compression");
 const { generateAuthToken } = require("./middlewares/authMiddleWare");
+const logger = require("./winstonConfig");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -45,6 +46,7 @@ app.listen(port, (err) => {
   console.log(`Server listening on ${port}`);
   let token = generateAuthToken();
   console.log(`Auth token for the server is ${token}`);
+  logger.info(`Server started and running on Port : ${port}`);
   if (err) {
     console.log(err);
   }

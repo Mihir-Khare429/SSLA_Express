@@ -1,9 +1,11 @@
 const jwt = require("json-web-token");
+const logger = require("../winstonConfig");
 
 const authValidator = (req, res, next) => {
   try {
     let token;
     if (!req.headers.authorization) {
+      logger.error(`${req.method}: ${req.url} Token Required`);
       return next({ status: 401, message: "Token Required" });
     }
     if (
@@ -16,9 +18,11 @@ const authValidator = (req, res, next) => {
     if (verify.value && verify.value.isAdmin == true) {
       return next();
     } else {
+      logger.error(`${req.method}: ${req.url} Invalid Token`);
       return next({ status: 401, message: "Invalid Token" });
     }
   } catch (err) {
+    logger.error(`${req.method}: ${req.url} ${err.message}`);
     next(err);
   }
 };
