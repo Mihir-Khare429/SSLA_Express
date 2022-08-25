@@ -2,8 +2,11 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const dotenv = require("dotenv");
+dotenv.config();
 const port = process.env.PORT || 8000;
 const compression = require("compression");
+const { generateAuthToken } = require("./middlewares/authMiddleWare");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -33,13 +36,15 @@ app.get("/", (req, res) => {
 
 app.use("/product", productRoutes);
 app.use((err, req, res, next) => {
-  res
+  return res
     .status(err.status || 500)
     .send({ "error ": err.message || "Internal Server Error" });
 });
 
 app.listen(port, (err) => {
   console.log(`Server listening on ${port}`);
+  let token = generateAuthToken();
+  console.log(`Auth token for the server is ${token}`);
   if (err) {
     console.log(err);
   }

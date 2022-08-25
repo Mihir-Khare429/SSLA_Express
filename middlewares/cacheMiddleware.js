@@ -12,7 +12,6 @@ const cacheMiddleWare = async (req, res, next) => {
         });
       }
     });
-    next();
   } catch (err) {
     next(err);
   }
