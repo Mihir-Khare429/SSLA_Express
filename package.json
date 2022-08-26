@@ -16,6 +16,7 @@
     "json-web-token": "^3.2.0",
     "mongodb": "^4.8.1",
     "mongoose": "^6.5.1",
+    "newrelic": "^9.0.2",
     "node-cache": "^5.1.2",
     "react-scripts": "^5.0.1",
     "redis": "^4.3.0",

@@ -5,9 +5,19 @@ const logger = require("../winstonConfig");
 const cacheMiddleWare = async (req, res, next) => {
   try {
     const { productId } = req.params;
+    logger.info(
+      `Request Params ${JSON.stringify(req.params)}: Request Method ${
+        req.method
+      }: Request URL ${req.url}`
+    );
     redis.get(productId, (err, value) => {
       if (value) {
         let response = JSON.parse(value);
+        logger.info(
+          `Response Body ${JSON.stringify(
+            response
+          )}: Response Status 200: Served From Cache`
+        );
         return res.status(200).send({
           response,
         });

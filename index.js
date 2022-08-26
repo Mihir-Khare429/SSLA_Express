@@ -8,6 +8,7 @@ const port = process.env.PORT || 8000;
 const compression = require("compression");
 const { generateAuthToken } = require("./middlewares/authMiddleWare");
 const logger = require("./winstonConfig");
+const newRelic = require("newrelic");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

@@ -5,7 +5,11 @@ const authValidator = (req, res, next) => {
   try {
     let token;
     if (!req.headers.authorization) {
-      logger.error(`${req.method}: ${req.url} Token Required`);
+      logger.error(
+        `Request Body ${JSON.stringify(req.body)}: Request Method ${
+          req.method
+        }: Request URL ${req.url} Token Required`
+      );
       return next({ status: 401, message: "Token Required" });
     }
     if (
@@ -18,7 +22,11 @@ const authValidator = (req, res, next) => {
     if (verify.value && verify.value.isAdmin == true) {
       return next();
     } else {
-      logger.error(`${req.method}: ${req.url} Invalid Token`);
+      logger.error(
+        `Request Body ${JSON.stringify(req.body)}: Request Method ${
+          req.method
+        }: Request URL ${req.url} Token ${token}: Invalid Token`
+      );
       return next({ status: 401, message: "Invalid Token" });
     }
   } catch (err) {
