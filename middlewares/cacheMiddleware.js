@@ -33,7 +33,7 @@ const cacheMiss = (key, value) => {
   try {
     redis.set(key, JSON.stringify(value));
   } catch (err) {
-    logger.error(`${req.method}: ${req.url} ${err.message}`);
+    logger.error(`Cache Key ${key}: ${req.method}: ${req.url} ${err.message}`);
     return err;
   }
 };

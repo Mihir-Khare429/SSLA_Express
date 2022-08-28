@@ -22,9 +22,4 @@ const logConfiguration = {
 
 const logger = winston.createLogger(logConfiguration);
 
-logger.log({
-  message: "Hi Winston",
-  level: "info",
-});
-
 module.exports = logger;

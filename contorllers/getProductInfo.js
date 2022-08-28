@@ -23,6 +23,11 @@ const getProductInfo = async (req, res, next) => {
     );
     res.status(200).send(productInfo);
   } catch (err) {
+    logger.error(
+      `Request Method ${req.method}: Request Body ${JSON.stringify(
+        req.body
+      )}: Request URL ${req.url}: Error ${err}`
+    );
     return next(err);
   }
 };

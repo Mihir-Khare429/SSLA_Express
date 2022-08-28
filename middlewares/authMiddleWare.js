@@ -1,5 +1,11 @@
 const jwt = require("json-web-token");
 const logger = require("../winstonConfig");
+const axios = require("axios");
+
+const PRINCIPAL_URL =
+  "https://api.cimpress.io/auth/access-management/v1/principals?q=self";
+const VALIDATE_PRINCIPAL =
+  "https://api.cimpress.io/auth/access-management/v1/principals/self?responseFilter=group,string&include=true";
 
 const authValidator = (req, res, next) => {
   try {
@@ -51,7 +57,38 @@ const generateAuthToken = () => {
   );
 };
 
+const cimpressAuthValidator = (req, res, next) => {
+  try {
+    let token;
+    if (!req.headers.authorization) {
+      logger.error(
+        `Request Body ${JSON.stringify(req.body)}: Request Method ${
+          req.method
+        }: Request URL ${req.url} Token Required`
+      );
+      return next({ status: 401, message: "Token Required" });
+    }
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.split(" ")[0] === "Bearer"
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    }
+    const tokenConfig = {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+    const response = axios.get(PRINCIPAL_URL, tokenConfig);
+    console.log(response);
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   authValidator,
   generateAuthToken,
+  cimpressAuthValidator,
 };
