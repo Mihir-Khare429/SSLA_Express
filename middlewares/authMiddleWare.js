@@ -1,11 +1,8 @@
 const jwt = require("json-web-token");
 const logger = require("../winstonConfig");
 const axios = require("axios");
-
-const PRINCIPAL_URL =
-  "https://api.cimpress.io/auth/access-management/v1/principals?q=self";
-const VALIDATE_PRINCIPAL =
-  "https://api.cimpress.io/auth/access-management/v1/principals/self?responseFilter=group,string&include=true";
+const jwtDecode = require("jwt-decode");
+const { response } = require("express");
 
 const authValidator = (req, res, next) => {
   try {
@@ -74,14 +71,28 @@ const cimpressAuthValidator = (req, res, next) => {
     ) {
       token = req.headers.authorization.split(" ")[1];
     }
-    const tokenConfig = {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    };
-    const response = axios.get(PRINCIPAL_URL, tokenConfig);
-    console.log(response);
-    next();
+    const decode_token = jwtDecode(token);
+    if (decode_token.sub) {
+      const VALIDATE_PRINCIPAL =
+        process.env.VALIDATE_PRINCIPAL +
+        `${decode_token.sub}` +
+        process.env.PRINCIPAL_QUERY_STRING;
+      const tokenConfig = {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      };
+      axios
+        .get(VALIDATE_PRINCIPAL, tokenConfig)
+        .then((body) => {
+          console.log(body.data.profile.email_verified);
+          return next();
+        })
+        .catch((err) => {
+          console.log(err.message);
+          return next({ status: 401, message: "Invalid Token" });
+        });
+    }
   } catch (err) {
     next(err);
   }
