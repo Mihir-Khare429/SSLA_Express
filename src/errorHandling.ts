@@ -1,5 +1,6 @@
-class CustomError extends Error {
-  constructor(message, statusCode) {
+export class CustomError extends Error {
+  statusCode: number;
+  constructor(message :string, statusCode : number) {
     super();
     this.message = message;
     this.statusCode = statusCode;
@@ -25,5 +26,3 @@ class CustomError extends Error {
     return new CustomError("Unhandled Request", 500);
   }
 }
-
-module.exports = CustomError;

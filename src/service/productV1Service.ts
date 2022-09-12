@@ -1,7 +1,7 @@
 const DALWrapper = require("../DAL/dalLogic");
 
-class ProductV1Service {
-  async getDataFromDatabase(productId) {
+export class ProductV1Service {
+  async getDataFromDatabase(productId : string) {
     try {
       const response = await DALWrapper.getProductDataV1(productId);
       return response;
@@ -10,7 +10,7 @@ class ProductV1Service {
     }
   }
 
-  async postDatatoDatabase(whitelist, rules, dataSheets) {
+  async postDatatoDatabase(whitelist : Array<any>, rules : Array<any>, dataSheets : Array<any>) {
     try {
       const response = await DALWrapper.addProductV1(
         whitelist,
@@ -28,5 +28,3 @@ class ProductV1Service {
     } catch (err) {}
   }
 }
-
-module.exports = ProductV1Service;
