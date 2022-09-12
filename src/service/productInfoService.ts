@@ -1,8 +1,8 @@
 const ProductServiceFactory = require("./productServiceFactory");
 const DataFactory = require("../DAL/dataFactory");
 
-class ProductInfoService {
-  async #getDataFromDatabase(productId) {
+export class ProductInfoService {
+   private async getDataFromDatabase(productId : string) {
     try {
       const data = new DataFactory();
       const response = await data.getProductInfo(productId);
@@ -12,7 +12,7 @@ class ProductInfoService {
     }
   }
 
-  async #getDataFromService(productId, version) {
+  private async getDataFromService(productId : string, version : string) {
     try {
       let response;
       let productFactory = new ProductServiceFactory();
@@ -24,10 +24,10 @@ class ProductInfoService {
     }
   }
 
-  async getInfo(productId) {
+  async getInfo(productId : string) {
     try {
-      const productVersion = await this.#getDataFromDatabase(productId);
-      const productInfo = await this.#getDataFromService(
+      const productVersion = await this.getDataFromDatabase(productId);
+      const productInfo = await this.getDataFromService(
         productId,
         productVersion
       );
@@ -37,5 +37,3 @@ class ProductInfoService {
     }
   }
 }
-
-module.exports = ProductInfoService;

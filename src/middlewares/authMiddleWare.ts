@@ -1,12 +1,12 @@
-const jwt = require("json-web-token");
-const logger = require("../winstonConfig");
-const axios = require("axios");
-const jwtDecode = require("jwt-decode");
-const { response } = require("express");
+import express , {Request , Response ,NextFunction}from 'express';
+import jwt from 'json-web-token';
+import {logger} from '../winstonConfig'
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
-const authValidator = (req, res, next) => {
+export const authValidator = (req : Request, res : Response, next : NextFunction) => {
   try {
-    let token;
+    let token : string;
     if (!req.headers.authorization) {
       logger.error(
         `Request Body ${JSON.stringify(req.body)}: Request Method ${
@@ -21,29 +21,32 @@ const authValidator = (req, res, next) => {
     ) {
       token = req.headers.authorization.split(" ")[1];
     }
-    const verify = jwt.decode(process.env.Token_Secret, token);
+    const verify = jwt.decode(process.env.Token_Secret!, token!,() => {});
     if (verify.value && verify.value.isAdmin == true) {
       return next();
     } else {
       logger.error(
         `Request Body ${JSON.stringify(req.body)}: Request Method ${
           req.method
-        }: Request URL ${req.url} Token ${token}: Invalid Token`
+        }: Request URL ${req.url} Token ${token!}: Invalid Token`
       );
       return next({ status: 401, message: "Invalid Token" });
     }
   } catch (err) {
-    logger.error(`${req.method}: ${req.url} ${err.message}`);
-    next(err);
+    if(err instanceof Error){
+      logger.error(`${req.method}: ${req.url} ${err.message}`);
+      next(err);
+    }
   }
 };
 
-const generateAuthToken = () => {
+export const generateAuthToken = () => {
   const token = jwt.encode(
-    process.env.Token_Secret,
+    process.env.Token_Secret!,
     {
       isAdmin: true,
     },
+    'HS256',
     (value, err) => {
       if (err) {
         console.log(err);
@@ -54,9 +57,9 @@ const generateAuthToken = () => {
   );
 };
 
-const cimpressAuthValidator = (req, res, next) => {
+export const cimpressAuthValidator = (req : Request, res : Response, next : NextFunction) => {
   try {
-    let token;
+    let token : string;
     if (!req.headers.authorization) {
       logger.error(
         `Request Body ${JSON.stringify(req.body)}: Request Method ${
@@ -71,15 +74,18 @@ const cimpressAuthValidator = (req, res, next) => {
     ) {
       token = req.headers.authorization.split(" ")[1];
     }
-    const decode_token = jwtDecode(token);
-    if (decode_token.sub) {
+    type DecodedToken  = {
+      [key: string]: any  
+    }
+    const decode_token : DecodedToken = jwtDecode(token!);
+    if (decode_token && decode_token.sub) {
       const VALIDATE_PRINCIPAL =
         process.env.VALIDATE_PRINCIPAL +
         `${decode_token.sub}` +
         process.env.PRINCIPAL_QUERY_STRING;
       const tokenConfig = {
         headers: {
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${token!}`,
         },
       };
       axios
@@ -96,10 +102,4 @@ const cimpressAuthValidator = (req, res, next) => {
   } catch (err) {
     next(err);
   }
-};
-
-module.exports = {
-  authValidator,
-  generateAuthToken,
-  cimpressAuthValidator,
 };

@@ -1,9 +1,10 @@
-const Validator = require("../Validation/validator");
-const ProductInfoService = require("../service/productInfoService");
-const { cacheMiss } = require("../middlewares/cacheMiddleware");
-const logger = require("../winstonConfig");
+import { Request , Response , NextFunction}  from 'express';
+import { Validator } from '../Validation/validator';
+import { ProductInfoService } from '../service/productInfoService';
+import { cacheMiss } from '../middlewares/cacheMiddleware';
+import { logger } from '../winstonConfig';
 
-const getProductInfo = async (req, res, next) => {
+export const getProductInfo = async (req : Request, res : Response, next : NextFunction) => {
   try {
     const { productId } = req.params;
     if (!Validator.idValidator(productId)) {
@@ -31,5 +32,3 @@ const getProductInfo = async (req, res, next) => {
     return next(err);
   }
 };
-
-module.exports = getProductInfo;

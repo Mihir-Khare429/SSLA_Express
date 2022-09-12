@@ -1,8 +1,10 @@
-const Redis = require("ioredis");
-const redis = new Redis();
-const logger = require("../winstonConfig");
+import {Request,Response,NextFunction} from 'express';
+import Redis from 'ioredis';
+import {logger} from '../winstonConfig';
 
-const cacheMiddleWare = async (req, res, next) => {
+const redis = new Redis();
+
+export const cacheMiddleWare = async (req : Request, res : Response, next : NextFunction) => {
   try {
     const { productId } = req.params;
     logger.info(
@@ -26,21 +28,20 @@ const cacheMiddleWare = async (req, res, next) => {
       }
     });
   } catch (err) {
-    logger.error(`${req.method}: ${req.url} ${err.message}`);
-    next(err);
+    if(err instanceof Error){
+      logger.error(`${req.method}: ${req.url} ${err.message}`);
+      next(err);
+    }
   }
 };
 
-const cacheMiss = (key, value) => {
+export const cacheMiss = (key : string, value : string | Object) : void | Error => {
   try {
     redis.set(key, JSON.stringify(value));
   } catch (err) {
-    logger.error(`Cache Key ${key}: ${req.method}: ${req.url} ${err.message}`);
-    return err;
+    if(err instanceof Error){
+      logger.error(`Cache Miss Key ${key}:${err.message}`);
+      return err;
+    }
   }
-};
-
-module.exports = {
-  cacheMiddleWare,
-  cacheMiss,
 };
