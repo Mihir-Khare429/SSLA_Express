@@ -29,6 +29,7 @@ class v1DataHandler {
                 dataSheets,
             };
             const postData = await data.postData(productV1_1.default, saveData);
+            console.log("Product Saved Info", postData);
             return postData;
         }
         catch (err) {

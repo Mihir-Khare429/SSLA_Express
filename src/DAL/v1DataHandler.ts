@@ -23,6 +23,7 @@ export class v1DataHandler {
         dataSheets,
       };
       const postData = await data.postData(ProductV1, saveData);
+      console.log("Product Saved Info", postData);
       return postData;
     } catch (err) {
       return err;

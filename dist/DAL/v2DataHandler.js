@@ -31,6 +31,7 @@ class V2DataHandler {
                 options,
             };
             const data = await productInfo.postData(ProductV2, productData);
+            console.log("Product Saved Info", data);
             return data;
         }
         catch (err) {

@@ -53,6 +53,7 @@ export class DataFactory {
         });
         await productInfo.save();
       }
+      console.log("Product Saved Info",product)
       return {
         message: product,
       };

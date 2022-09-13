@@ -56,7 +56,7 @@ export const getProductV1 = async (req : Request, res : Response, next : NextFun
       return;
     }
     const v1Product = new ProductV1Service();
-    const response = await v1Product.getDataFromDatabase(productId);
+    const response = v1Product.getDataFromDatabase(productId);
     cacheMiss(productId, response);
     logger.info(
       `Response Body ${JSON.stringify(

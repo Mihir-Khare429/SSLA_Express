@@ -40,7 +40,7 @@ const getProductV1 = async (req, res, next) => {
             return;
         }
         const v1Product = new productV1Service_1.ProductV1Service();
-        const response = await v1Product.getDataFromDatabase(productId);
+        const response = v1Product.getDataFromDatabase(productId);
         (0, cacheMiddleware_1.cacheMiss)(productId, response);
         winstonConfig_1.logger.info(`Response Body ${JSON.stringify(response)}: Response Status 200: Served From Database`);
         res.status(200).send({

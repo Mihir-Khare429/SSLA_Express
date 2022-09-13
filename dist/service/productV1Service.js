@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductV1Service = void 0;
-const DALWrapper = require("../DAL/dalLogic");
+const addProductDataV1_1 = require("../DAL/addProductDataV1");
+const getProductDataV1_1 = require("../DAL/getProductDataV1");
 class ProductV1Service {
     async getDataFromDatabase(productId) {
         try {
-            const response = await DALWrapper.getProductDataV1(productId);
+            const response = (0, getProductDataV1_1.getProductDataV1)(productId);
             return response;
         }
         catch (err) {
@@ -14,7 +15,8 @@ class ProductV1Service {
     }
     async postDatatoDatabase(whitelist, rules, dataSheets) {
         try {
-            const response = await DALWrapper.addProductV1(whitelist, rules, dataSheets);
+            const response = await (0, addProductDataV1_1.addProductDataV1)(whitelist, rules, dataSheets);
+            console.log("Response", response);
             return response;
         }
         catch (err) {
