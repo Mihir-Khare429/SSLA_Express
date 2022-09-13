@@ -1,13 +1,13 @@
-const V2DataHandler = require("./v2DataHandler");
+import { V2DataHandler } from "./v2DataHandler";
 const productIdGenerator = require("../middlewares/productIdGenerator");
 
-const addProductV2 = async (
-  selfLink,
-  accountId,
-  name,
-  quantity,
-  description,
-  options
+export const addProductV2 = async (
+  selfLink : string,
+  accountId : string,
+  name : string,
+  quantity : Array<any>,
+  description : string,
+  options : Array<any>
 ) => {
   try {
     const handler = new V2DataHandler();
@@ -25,5 +25,3 @@ const addProductV2 = async (
     return err;
   }
 };
-
-module.exports = addProductV2;

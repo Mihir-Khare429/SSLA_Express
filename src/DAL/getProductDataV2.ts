@@ -1,6 +1,6 @@
-const V2DataHandler = require("./v2DataHandler");
+import { V2DataHandler } from './v2DataHandler';
 
-const getProductDataV2 = async (id) => {
+export const getProductDataV2 = async (id : string) => {
   try {
     let productV2 = new V2DataHandler();
     const product = productV2.getData(id);
@@ -12,5 +12,3 @@ const getProductDataV2 = async (id) => {
     return err;
   }
 };
-
-module.exports = getProductDataV2;

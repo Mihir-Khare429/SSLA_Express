@@ -1,5 +1,5 @@
 import { Router } from 'express';
-export const router : Router = Router()
+export const router = Router()
 
 import { authValidator , cimpressAuthValidator } from "../middlewares/authMiddleWare";
 import { cacheMiddleWare } from "../middlewares/cacheMiddleware";

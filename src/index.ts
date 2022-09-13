@@ -7,13 +7,13 @@ import {generateAuthToken} from './middlewares/authMiddleWare';
 const app = express();
 dotenv.config();
 const port = process.env.PORT || 8000;
-const logger = require("./winstonConfig");
+import {logger} from './winstonConfig'
 const newRelic = require("newrelic");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const productRoutes = require("./routes/productRoutes");
+import {router} from './routes/productRoutes';
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/node_setup")
@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use("/product", productRoutes);
+app.use("/product", router);
 app.use((err:Error, req : Request, res : Response, next : NextFunction) => {
   return res
     .status(500)

@@ -1,9 +1,8 @@
-const ProductV1 = require("../model/productV1");
+import ProductV1  from "../model/productV1";
+import { DataFactory } from './dataFactory'
 
-const DataFactory = require("./dataFactory");
-
-class v1DataHandler {
-  async getData(productId) {
+export class v1DataHandler {
+  async getData(productId : string) {
     try {
       const data = new DataFactory();
       const getData = await data.searchData(ProductV1, {
@@ -14,10 +13,10 @@ class v1DataHandler {
       return err;
     }
   }
-  async postData(productId, whitelist, rules, dataSheets) {
+  async postData(productId: any, whitelist : Array<any>, rules : Array<any>, dataSheets : Array<any>) {
     try {
       const data = new DataFactory();
-      const saveData = {
+      const saveData  = {
         productId,
         whitelist,
         rules,
@@ -30,5 +29,3 @@ class v1DataHandler {
     }
   }
 }
-
-module.exports = v1DataHandler;

@@ -1,16 +1,12 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.productIdGenerator = void 0;
 const uuid = require("short-uuid");
 const logger = require("../winstonConfig");
 const productIdGenerator = () => {
-    try {
-        const prefix = "CIM-";
-        const id = uuid.generate();
-        const productId = `${prefix}${id}`;
-        return productId;
-    }
-    catch (err) {
-        logger.error(`${req.method}: ${req.url} ${err.message}`);
-        return err;
-    }
+    const prefix = "CIM-";
+    const id = uuid.generate();
+    const productId = `${prefix}${id}`;
+    return productId;
 };
-module.exports = productIdGenerator;
+exports.productIdGenerator = productIdGenerator;

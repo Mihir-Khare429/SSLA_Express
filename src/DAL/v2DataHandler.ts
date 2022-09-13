@@ -2,8 +2,8 @@ const ProductV2 = require("../model/productV2");
 
 const DataFactory = require("./dataFactory");
 
-class V2DataHandler {
-  async getData(productId) {
+export class V2DataHandler {
+  async getData(productId : string) {
     try {
       let productInfo = new DataFactory();
       const data = await productInfo.searchData(ProductV2, {
@@ -15,13 +15,13 @@ class V2DataHandler {
     }
   }
   async postData(
-    productId,
-    selfLink,
-    accountId,
-    name,
-    quantity,
-    description,
-    options
+    productId: any,
+    selfLink : string,
+    accountId : string,
+    name : string,
+    quantity : Array<any>,
+    description : string,
+    options : Array<any>
   ) {
     try {
       let productInfo = new DataFactory();
@@ -43,5 +43,3 @@ class V2DataHandler {
     }
   }
 }
-
-module.exports = V2DataHandler;

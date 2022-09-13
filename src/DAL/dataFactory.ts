@@ -1,15 +1,14 @@
-const CustomError = require("../errorHandling");
-const ProductV1 = require("../model/productV1");
-const ProductV2 = require("../model/productV2");
-const ProductVersionInfo = require("../model/productVersionInfo");
+import ProductV1  from "../model/productV1";
+import ProductV2  from "../model/productV1";
+import ProductVersionInfo from '../model/productVersionInfo'
 
-class DataFactory {
-  async getProductInfo(productId) {
+export class DataFactory {
+  async getProductInfo(productId : string) {
     try {
       const response = await ProductVersionInfo.findOne({
         productId,
       });
-      if (!response || response == {}) {
+      if (!response) {
         throw new Error("No Product Found");
       } else {
         return response.schemaStoredIn;
@@ -18,7 +17,7 @@ class DataFactory {
       return err;
     }
   }
-  async searchData(schema, query) {
+  async searchData(schema : typeof ProductV1 | typeof ProductV2, query : Object) {
     try {
       const response = await schema.findOne(query);
       if (response) {
@@ -26,14 +25,14 @@ class DataFactory {
       } else {
         console.log("djdfid");
       }
-    } catch (err) {
+    } catch (err : any) {
       throw {
         status: err.statusCode || 404,
         message: err.message || "Casting Error",
       };
     }
   }
-  async postData(schema, data) {
+  async postData(schema : typeof ProductV1 | typeof ProductV2, data : any) {
     try {
       const product = new schema(data);
       await product.save((err, product) => {
@@ -62,5 +61,3 @@ class DataFactory {
     }
   }
 }
-
-module.exports = DataFactory;
