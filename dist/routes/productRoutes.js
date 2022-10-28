@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.router = void 0;
+const express_1 = require("express");
+exports.router = (0, express_1.Router)();
+const authMiddleWare_1 = require("../middlewares/authMiddleWare");
+const cacheMiddleware_1 = require("../middlewares/cacheMiddleware");
+const v2ProductController_1 = require("../contorllers/v2ProductController");
+const v1ProductController_1 = require("../contorllers/v1ProductController");
+const getProductInfo_1 = require("../contorllers/getProductInfo");
+exports.router.post("/addProductV2", v2ProductController_1.addProductV2);
+exports.router.post("/addProductV1", v1ProductController_1.addProductV1);
+exports.router.get("/getProductV2/:productId", v2ProductController_1.getProductV2);
+exports.router.get("/getProductV1/:productId", cacheMiddleware_1.cacheMiddleWare, v1ProductController_1.getProductV1);
+exports.router.get("/getProductInfo/:productId", authMiddleWare_1.cimpressAuthValidator, cacheMiddleware_1.cacheMiddleWare, getProductInfo_1.getProductInfo);
