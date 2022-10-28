@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.cacheMiss = exports.cacheMiddleWare = void 0;
 const ioredis_1 = __importDefault(require("ioredis"));
 const winstonConfig_1 = require("../winstonConfig");
-const redis = new ioredis_1.default();
+const redis = new ioredis_1.default(6379, "redis-server");
 const cacheMiddleWare = async (req, res, next) => {
     try {
         const { productId } = req.params;

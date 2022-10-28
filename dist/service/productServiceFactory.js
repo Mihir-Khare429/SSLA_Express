@@ -4,7 +4,7 @@ exports.ProductServiceFactory = void 0;
 const V1ProductService = require("./productV1Service");
 const V2ProductService = require("./productV2Service");
 class ProductServiceFactory {
-    createVersionObjects(type) {
+    createObjects(type) {
         switch (type) {
             case "productV1":
                 return new V1ProductService();

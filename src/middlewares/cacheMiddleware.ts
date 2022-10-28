@@ -2,7 +2,7 @@ import {Request,Response,NextFunction} from 'express';
 import Redis from 'ioredis';
 import {logger} from '../winstonConfig';
 
-const redis = new Redis();
+const redis = new Redis(6379,"redis-server");
 
 export const cacheMiddleWare = async (req : Request, res : Response, next : NextFunction) => {
   try {

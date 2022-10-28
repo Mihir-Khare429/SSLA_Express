@@ -1,8 +1,12 @@
 const V1ProductService = require("./productV1Service");
 const V2ProductService = require("./productV2Service");
 
-export class ProductServiceFactory {
-  createVersionObjects(type : string) {
+interface ServiceFactory {
+  createObjects(type : string) : typeof V1ProductService | typeof V2ProductService
+}
+
+export class ProductServiceFactory implements ServiceFactory {
+  createObjects(type : string) {
     switch (type) {
       case "productV1":
         return new V1ProductService();
